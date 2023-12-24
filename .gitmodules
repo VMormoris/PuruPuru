@@ -1,0 +1,11 @@
+[submodule "3rdParty/imgui-node-editor"]
+	path = 3rdPary/imgui-node-editor
+	url = https://github.com/thedmd/imgui-node-editor.git
+	branch = docking
+[submodule "3rdParty/entt"]
+	path = 3rdParty/entt
+	url = https://github.com/skypjack/entt.git
+	branch = v3.12.x
+[submodule "3rdParty/yaml-cpp"]
+	path = 3rdParty/yaml-cpp
+	url = https://github.com/VMormoris/yaml-cpp.git

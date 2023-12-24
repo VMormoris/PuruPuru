@@ -1,0 +1,17 @@
+# Binaries
+bin
+bin-int
+!3rdParty/gtreflect/bin
+
+#gui files
+NodeEditor.json
+
+# Visual Studio
+.vs
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+
+#NextCloud
+**/Thumbs.db
