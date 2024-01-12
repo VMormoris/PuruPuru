@@ -33,7 +33,7 @@ jobs:
         run: msbuild /m /p:Configuration=${{matrix.config}} .
 
       - name: Create release zip
-        run: Copy-Item LICENSE,Data -Destination "bin/${{matrix.config}}-windows/PuruPuru" && Compress-Archive bin/${{matrix.config}}-windows/PuruPuru ${{matrix.config}}.zip
+        run: Copy-Item LICENSE,Data -Destination "bin/${{matrix.config}}-windows/PuruPuru" -Recurse && Compress-Archive bin/${{matrix.config}}-windows/PuruPuru ${{matrix.config}}.zip
 
       - name: Publish
         id: Publish

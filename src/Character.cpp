@@ -781,6 +781,14 @@ void Character::RenderNodes(void)
                 return output;
     }
 
+    if (auto* pins = sQuestECS.try_get<InputOutput>(entityID))
+    {
+        if (pins->Input.ID == pinId)
+            return pins->Input;
+        if (pins->Output.ID == pinId)
+            return pins->Output;
+    }
+
 
     return {};
 }
@@ -1002,8 +1010,8 @@ entt::entity Character::SpawnAcceptQuestNode(void)
     node.Owner = mID;
 
     auto& pins = sQuestECS.emplace<InputOutput>(entityID);
-    pins.Input = { GetNextID(), "", PinKind::Input };
-    pins.Output = { GetNextID(), "", PinKind::Output };
+    pins.Input = { GetNextID(), PinKind::Input };
+    pins.Output = { GetNextID(), PinKind::Output };
 
     return entityID;
 }
@@ -1015,8 +1023,8 @@ entt::entity Character::SpawnReturnQuestNode(void)
     auto& node = mECS.emplace<ReturnQuestNode>(entityID, GetNextID());
     
     auto& pins = mECS.emplace<InputOutput>(entityID);
-    pins.Input = { GetNextID(), "", PinKind::Input };
-    pins.Output = { GetNextID(), "", PinKind::Output };
+    pins.Input = { GetNextID(), PinKind::Input };
+    pins.Output = { GetNextID(), PinKind::Output };
 
     return entityID;
 }
@@ -1078,6 +1086,13 @@ entt::entity Character::SpawnCommentNode(void)
                 if (pin.ID == pinId)
                     return entityID;
         }
+    }
+
+    {
+        auto view = sQuestECS.view<InputOutput>();
+        for (auto&& [entityID, node] : view.each())
+            if (node.Input.ID == pinId || node.Output.ID == pinId)
+                return entityID;
     }
     
     return entt::null;

@@ -1,3 +1,9 @@
+# Version v0.1.1
+## Bug Fixes:
+- Added back missing colors on nodes header
+- Can connect output of `Accept Quest Node`
+<br>
+
 # Version v0.1.0
 ## Features:
 - Supported Nodes:
