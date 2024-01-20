@@ -16,17 +16,17 @@ IncludeDirs={}
 IncludeDirs["imgui"]="%{wks.location}/3rdParty/imgui"
 IncludeDirs["stbi"]="%{wks.location}/3rdParty/imgui-node-editor/external/stb_image"
 IncludeDirs["imnodes"]="%{wks.location}/3rdParty/imgui-node-editor"
-IncludeDirs["gtest"]="%{wks.location}/3rdParty/googletest"
+--IncludeDirs["gtest"]="%{wks.location}/3rdParty/googletest"
 --IncludeDirs["entt"]="%{wks.location}/3rdParty/entt/single_include"
 IncludeDirs["yaml"]="%{wks.location}/3rdParty/yaml-cpp/include"
-IncludeDirs["glfw"]="D:/dev/glfw/include"
+IncludeDirs["glfw"]="%{wks.location}/3rdParty/glfw/include"
 IncludeDirs["glad"]="%{wks.location}/3rdParty/glad/include"
 
 include "3rdParty/imgui"
 include "3rdParty/imgui-node-editor"
 include "3rdParty/yaml-cpp"
 include "3rdParty/glad"
-include "D:/dev/glfw"
+include "3rdParty/glfw"
 
 project "PuruPuru"
     location "PuruPuru"
@@ -51,9 +51,11 @@ project "PuruPuru"
 		"%{IncludeDirs.imnodes}/examples/application/source/imgui_impl_opengl3.cpp",
 		"%{IncludeDirs.imnodes}/examples/application/source/imgui_impl_glfw.cpp",
 
-        "%{IncludeDirs.imnodes}/examples/application/source/**.h",
         "%{IncludeDirs.imnodes}/examples/application/source/platform_glfw.cpp",
         "%{IncludeDirs.imnodes}/examples/application/source/renderer_ogl3.cpp",
+
+        --"%{IncludeDirs.imnodes}/examples/application/source/application.cpp",
+        --"%{IncludeDirs.imnodes}/examples/application/source/entry_point.cpp",
     }
 
     includedirs
@@ -83,49 +85,49 @@ project "PuruPuru"
 		runtime "Release"
 		optimize "on"
 
-project "tests"
-    location "tests"
-    kind "ConsoleApp"
-    language "C++"
-    cppdialect "C++17"
-
-    targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
-    objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-        "%{prj.name}/src/**.cpp",
-        "PuruPuru/src/**.cpp",
-
-        "%{IncludeDirs.gtest}/googletest/src/**.cc",
-    }
-
-    removefiles {
-        "PuruPuru/src/app.cpp",
-        "%{IncludeDirs.gtest}/googletest/src/gtest-all.cc",
-    }
-
-    includedirs
-    {
-        "PuruPuru/src",
-        "%{IncludeDirs.imgui}",
-        "%{IncludeDirs.imnodes}",
-        "%{IncludeDirs.imnodes}/examples/application/include/",
-
-
-        "%{IncludeDirs.gtest}/googletest",
-        "%{IncludeDirs.gtest}/googletest/include",
-    }
-
-    links { "ImGui", "imgui-node-editor" }
-
-    defines { "_CRT_SECURE_NO_WARNINGS" }
-
-    filter "system:windows"
-        systemversion "latest"
-    filter "configurations:Debug"
-        runtime "Debug"
-        symbols "on"
-    filter "configurations:Release"
-        runtime "Release"
-        optimize "on"
+--project "tests"
+--    location "tests"
+--    kind "ConsoleApp"
+--    language "C++"
+--    cppdialect "C++17"
+--
+--    targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+--    objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+--
+--    files
+--    {
+--        "%{prj.name}/src/**.cpp",
+--        "PuruPuru/src/**.cpp",
+--
+--        "%{IncludeDirs.gtest}/googletest/src/**.cc",
+--    }
+--
+--    removefiles {
+--        "PuruPuru/src/app.cpp",
+--        "%{IncludeDirs.gtest}/googletest/src/gtest-all.cc",
+--    }
+--
+--    includedirs
+--    {
+--        "PuruPuru/src",
+--        "%{IncludeDirs.imgui}",
+--        "%{IncludeDirs.imnodes}",
+--        "%{IncludeDirs.imnodes}/examples/application/include/",
+--
+--
+--        "%{IncludeDirs.gtest}/googletest",
+--        "%{IncludeDirs.gtest}/googletest/include",
+--    }
+--
+--    links { "ImGui", "imgui-node-editor" }
+--
+--    defines { "_CRT_SECURE_NO_WARNINGS" }
+--
+--    filter "system:windows"
+--        systemversion "latest"
+--    filter "configurations:Debug"
+--        runtime "Debug"
+--        symbols "on"
+--    filter "configurations:Release"
+--        runtime "Release"
+--        optimize "on"

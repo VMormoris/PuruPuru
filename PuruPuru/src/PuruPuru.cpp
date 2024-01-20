@@ -338,7 +338,6 @@ void PuruPuru::DrawCustomTitleBar(float& outTitlebarHeight)
 
 	// Logo
 	{
-
 		const int logoWidth = 48;// m_LogoTex->GetWidth();
 		const int logoHeight = 48;// m_LogoTex->GetHeight();
 		if (sLogo.Size() == 0)
@@ -360,8 +359,8 @@ void PuruPuru::DrawCustomTitleBar(float& outTitlebarHeight)
 	// On Windows we hook into the GLFW win32 window internals
 	ImGui::SetCursorPos(ImVec2(windowPadding.x, windowPadding.y + titlebarVerticalOffset)); // Reset cursor pos
 	// DEBUG DRAG BOUNDS
-	//const ImColor debugColor = { 255, 0, 0, 255 };
-	//fgDrawList->AddRect(ImGui::GetCursorScreenPos(), ImVec2(ImGui::GetCursorScreenPos().x + w - buttonsAreaWidth, ImGui::GetCursorScreenPos().y + titlebarHeight), debugColor);
+	const ImColor debugColor = { 255, 0, 0, 255 };
+	//fgDrawList->AddRect(ImGui::GetCursorScreenPos(), ImVec2(ImGui::GetCursorScreenPos().x + w - buttonsAreaWidth,// ImGui::GetCursorScreenPos().y + titlebarHeight), debugColor);
 	ImGui::InvisibleButton("##titleBarDragZone", ImVec2(w - buttonsAreaWidth, titlebarHeight));
 
 	mTitlebarHovered = ImGui::IsItemHovered();
@@ -533,6 +532,12 @@ bool PuruPuru::IsMaximized(void) const
 	GLFWwindow* window = (GLFWwindow*)m_Platform->GetPlatformAgnosticWindowHandle();
 	const auto flag = (bool)glfwGetWindowAttrib(window, GLFW_MAXIMIZED);
 	return flag;
+}
+
+void PuruPuru::SetTheme(const ImGuiStyle& theme)
+{
+    auto& style = ImGui::GetStyle();
+    style = theme;
 }
 
 int Main(int argc, char** argv)

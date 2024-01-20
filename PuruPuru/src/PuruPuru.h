@@ -9,6 +9,7 @@ struct PuruPuru : public Application {
     void OnStart(void) override;
     void OnStop(void) override;
 
+    void SetTheme(const ImGuiStyle& theme);
     void OnFrame(float deltaTime) override;
 
 private:
