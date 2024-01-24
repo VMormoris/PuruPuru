@@ -1,8 +1,16 @@
+# Version v0.1.2
+## Bug Fixes:
+- Force extensions when exporting
+- Links towards AcceptQuestNodes where omitted during export
+- Empty outputs should no longer cause problems in game
+
+## Features:
+- Change extension of export file from `.puru` to `.epuru` to avoid confusion when refering to the tool vs engine files 
+
 # Version v0.1.1
 ## Bug Fixes:
 - Added back missing colors on nodes header
 - Can connect output of `Accept Quest Node`
-<br>
 
 # Version v0.1.0
 ## Features:
@@ -25,4 +33,4 @@
 ## Known bugs:
 - When you have a very big tree and you zoom out a lot, the graphics get broken
 - Cannot remove dialogue options
-- Empty outputs will result in bugs in game
+- ~~Empty outputs will result in bugs in game~~
