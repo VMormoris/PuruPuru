@@ -28,10 +28,10 @@ void Scene::RenderFrame(void) noexcept
             ImGui::Separator();
             if (ImGui::MenuItem("Export..."))
             {
-                std::filesystem::path filepath = CreateFileDialog(FileDialogType::Save);
+                std::filesystem::path filepath = CreateFileDialog(FileDialogType::Save, "Export Puru Puru File (*.epuru)\0*.epuru\0");
                 if (!filepath.empty())
                 {
-                    filepath.replace_extension(".puru");
+                    filepath.replace_extension(".epuru");
                     ExportSerializer{ this }.Serialize(filepath.string());
                 }
             }
