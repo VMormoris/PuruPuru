@@ -30,7 +30,10 @@ void Scene::RenderFrame(void) noexcept
             {
                 std::filesystem::path filepath = CreateFileDialog(FileDialogType::Save);
                 if (!filepath.empty())
+                {
+                    filepath.replace_extension(".puru");
                     ExportSerializer{ this }.Serialize(filepath.string());
+                }
             }
             if (ImGui::MenuItem("Export Lines..."))
             {
