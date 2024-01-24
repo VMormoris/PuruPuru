@@ -29,6 +29,9 @@ private:
 			}
 		}
 
+		if (data.empty())
+			data.emplace_back(0);
+
 		return data;
 	}
 
