@@ -405,6 +405,13 @@ void ExportSerializer::Serialize(const std::string& filepath)
 				return FindNodes(AnyNode{}, reg, entityID);
 	}
 
+	{
+		auto view = Character::sQuestECS.view<InputOutput>();
+		for (auto&& [entityID, node] : view.each())
+			if (node.Input.ID == pinId)
+				return FindNodes(AnyNode{}, Character::sQuestECS, entityID);
+	}
+
 	return nullptr;
 }
 
