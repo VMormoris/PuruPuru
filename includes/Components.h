@@ -331,6 +331,7 @@ template<typename ...T>
 struct ComponentGroup{};
 
 using AnyNode = ComponentGroup<
+    AcceptQuestNode, ReturnQuestNode, ObjectiveNode,
     VariableNode<bool>, VariableNode<int32_t>,
     ActNode,
     ForkNode, BranchNode,
@@ -338,7 +339,6 @@ using AnyNode = ComponentGroup<
     FlavorMatchNode, FlavorCheckNode,
     DiceNode,
     CommentNode,
-    AcceptQuestNode, ReturnQuestNode, ObjectiveNode,
     Node
 >;
 

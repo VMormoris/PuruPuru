@@ -1,3 +1,8 @@
+# Version v0.1.3
+## Bug Fixes:
+- Accept node some times failes to be created
+- Fix bug that always put accept quest node in middle upon creation and moves a random node on cursor
+
 # Version v0.1.2
 ## Bug Fixes:
 - Force extensions when exporting

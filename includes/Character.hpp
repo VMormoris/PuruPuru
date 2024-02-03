@@ -51,7 +51,7 @@ inline [[nodiscard]] Node* Character::FindNode(entt::entity entityID) const
 template<>
 inline [[nodiscard]] Node* Character::FindNode<AcceptQuestNode>(entt::entity entityID) const
 {
-	if (auto* node = mECS.try_get<AcceptQuestNode>(entityID))
+	if (auto* node = Character::sQuestECS.try_get<AcceptQuestNode>(entityID))
 		return (Node*)node;
 
 	return nullptr;
