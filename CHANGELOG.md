@@ -1,3 +1,10 @@
+# Version v0.1.4
+## Bug Fixes:
+- Random crash when passing through `Accept Quest Node` in debug
+
+## Features:
+- Added "searchbars" (just some input fields for now) to filter variable list 
+
 # Version v0.1.3
 ## Bug Fixes:
 - Accept node some times failes to be created
