@@ -77,7 +77,7 @@ namespace gte {
 		Image& operator=(Image&& rhs) noexcept;
 
 		//Casting operators
-		void* GetHandle(void) noexcept { return reinterpret_cast<void*>(mHandle); }
+		void* GetHandle(void) noexcept { return reinterpret_cast<void*>((uint64_t)mHandle); }
 
 	private:
 

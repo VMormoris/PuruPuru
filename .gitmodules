@@ -12,3 +12,6 @@
 [submodule "3rdParty/imgui-node-editor"]
 	path = 3rdParty/imgui-node-editor
 	url = https://github.com/VMormoris/imgui-node-editor.git
+[submodule "3rdParty/IconFontCppHeaders"]
+	path = 3rdParty/IconFontCppHeaders
+	url = https://github.com/juliettef/IconFontCppHeaders
