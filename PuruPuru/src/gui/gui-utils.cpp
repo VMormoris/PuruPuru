@@ -3,7 +3,11 @@
 #include "widgets.h"
 #include "embedded-icons.h"
 
+#include <algorithm>
+
 #include <GLFW/glfw3.h>
+
+#include <IconsForkAwesome.h>
 
 static gte::Image sMinimize;
 static gte::Image sMaximize;
@@ -14,6 +18,71 @@ static gte::Image sLogo;
 static ImU32 GetButtonColor(ImU32 tintNormal, ImU32 tintHovered, ImU32 tintPressed);
 
 namespace gui {
+	
+	bool Searchbar(const char* label, std::string& text, size_t length, float width)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		auto font = io.Fonts->Fonts[0];
+		auto IconFont = io.Fonts->Fonts[2];
+		const float lineHeight = font->FontSize + ImGui::GetStyle().FramePadding.y * 2.0f;
+
+		ImGui::PushID(label);
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 1.0f));
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.0f);
+		bool shouldFocus = false;
+		if (text.empty())//Check if hint should be showned so we know if we need to dislpay icon as well
+		{
+			ImVec2 size(lineHeight + 3.0f, lineHeight);
+			ImGui::PushFont(IconFont);
+			ImGui::PushStyleColor(ImGuiCol_Button, { 0.063f, 0.063f, 0.063f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.063f, 0.063f, 0.063f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.063f, 0.063f, 0.063f, 1.0f });
+			shouldFocus = ImGui::Button(ICON_FK_SEARCH, size);
+			ImGui::PopStyleColor(3);
+			ImGui::PopFont();
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 2.0f);
+		}
+		//Actual Input
+		ImGui::PushItemWidth(width);
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.063f, 0.063f, 0.063f, 1.0f });
+
+		char* buffer = new char[length + 1];
+		memcpy(buffer, text.c_str(), text.size() + 1);
+		if (shouldFocus) ImGui::SetKeyboardFocusHere();
+		bool changed = ImGui::InputTextWithHint("##Searchbar", "Search...", buffer, length);
+		if (changed)
+		{
+			text = std::string(buffer);
+			std::for_each(text.begin(), text.end(), [](char& c) { c = std::tolower(c); });
+		}
+		delete[] buffer;
+
+		ImGui::PopStyleColor();
+		ImGui::PopItemWidth();
+
+		if (!text.empty() && !changed)//Button for clearing text
+		{
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 2.0f);
+			
+			ImVec2 size(lineHeight + 3.0f, lineHeight);
+			ImGui::PushFont(IconFont);
+			ImGui::PushStyleColor(ImGuiCol_Button, { 0.063f, 0.063f, 0.063f, 1.0f });
+			const bool shouldClear = ImGui::Button(ICON_FK_TIMES, size);
+			ImGui::PopStyleColor();
+			ImGui::PopFont();
+			
+			if (shouldClear)
+			{
+				text = "";
+				changed = true;
+			}
+		}
+		ImGui::PopStyleVar(2);
+		ImGui::PopID();
+		return changed;
+	}
 
 	void ShiftCursorX(float distance)
 	{
@@ -254,7 +323,7 @@ namespace gui {
 			} };
 			//if (ImGui::InvisibleButton("Close", ImVec2(buttonWidth, buttonHeight)))
 			//	Application::Get().Close();
-			GLFWwindow* window;
+			//GLFWwindow* window;
 
 			if (ImGui::InvisibleButton("Close", ImVec2(buttonWidth, buttonHeight)))
 				DrawButtonImage(sClose.GetHandle(), baseColor, hoveredColor, buttonColP);

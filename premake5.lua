@@ -16,6 +16,7 @@ IncludeDirs={}
 IncludeDirs["imgui"]="%{wks.location}/3rdParty/imgui"
 IncludeDirs["stbi"]="%{wks.location}/3rdParty/imgui-node-editor/external/stb_image"
 IncludeDirs["imnodes"]="%{wks.location}/3rdParty/imgui-node-editor"
+IncludeDirs["IconHeader"]="%{wks.location}/3rdParty/IconFontCppHeaders"
 --IncludeDirs["gtest"]="%{wks.location}/3rdParty/googletest"
 --IncludeDirs["entt"]="%{wks.location}/3rdParty/entt/single_include"
 IncludeDirs["yaml"]="%{wks.location}/3rdParty/yaml-cpp/include"
@@ -70,6 +71,7 @@ project "PuruPuru"
         "%{IncludeDirs.imnodes}/examples/application/source/",
         "%{IncludeDirs.imnodes}/examples/blueprints-example/",
         "%{IncludeDirs.yaml}",
+        "%{IncludeDirs.IconHeader}",
     }
 
     links { "imgui-node-editor", "glfw", "opengl32", "yaml-cpp", "Glad" }

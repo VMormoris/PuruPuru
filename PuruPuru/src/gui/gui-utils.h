@@ -1,8 +1,16 @@
 #pragma once
 
 #include <imgui_internal.h>
+#include <string>
 
 namespace gui {
+
+	// ------------------------------ Utilities ----------------------------
+
+	bool Searchbar(const char* label, std::string& text, size_t length, float width = 160.0f);
+
+
+	// ------------------------------ Helpers ------------------------------
 
 	void ShiftCursorX(float distance);
 

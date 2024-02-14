@@ -20,6 +20,9 @@
 #include <fstream>
 #include <filesystem>
 
+// Icon font
+#include <IconsForkAwesome.h>
+
 static gte::Image sMinimize;
 static gte::Image sMaximize;
 static gte::Image sClose;
@@ -32,10 +35,17 @@ void PuruPuru::OnStart(void)
 {
     if (std::filesystem::exists("default.ptheme"))
     {
-        auto& io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
         const auto node = YAML::LoadFile("default.ptheme");
         const ImGuiStyle style = node.as<ImGuiStyle>();
         SetTheme(style);
+
+        static constexpr ImWchar icon_ranges[] = { ICON_MIN_FK, ICON_MAX_FK, 0 };
+        io.Fonts->AddFontFromFileTTF("data/Fonts/ForkAwesome/" FONT_ICON_FILE_NAME_FK, 13.0f, NULL, icon_ranges);
+        //io.FontDefault = io.Fonts->AddFontFromFileTTF("../Assets/Fonts/Roboto/Roboto-Regular.ttf", 18);
+        //io.Fonts->AddFontFromFileTTF("../Assets/Fonts/Icons/ForkAwesome/" FONT_ICON_FILE_NAME_FK, 18.0f, NULL, icon_ranges);
+        //io.Fonts->AddFontFromFileTTF("../Assets/Fonts/Roboto/Roboto-Regular.ttf", 32);
+        io.Fonts->Build();
     }
 
 	GLFWwindow* window = (GLFWwindow*)m_Platform->GetPlatformAgnosticWindowHandle();
@@ -61,6 +71,7 @@ void PuruPuru::OnFrame(float deltaTime)
 {
     DrawMainWindow();
 	DrawThemeWindow();
+    DrawTestWindow();
 }
 
 void PuruPuru::DrawThemeWindow(void)
@@ -254,6 +265,15 @@ void PuruPuru::DrawThemeWindow(void)
     ImGui::End();
 }
 
+void PuruPuru::DrawTestWindow(void)
+{
+    ImGui::Begin("Test");
+    static std::string filter = "";
+    if (gui::Searchbar("search", filter, 64))
+        printf("%s\n", filter.c_str());
+    ImGui::End();
+}
+
 void PuruPuru::DrawMainWindow(void)
 {
     {
@@ -274,13 +294,13 @@ void PuruPuru::DrawMainWindow(void)
 
         const bool isMaximized = IsMaximized();
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, isMaximized ? ImVec2(6.0f, 6.0f) : ImVec2(1.0f, 1.0f));
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 3.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, isMaximized ? ImVec2(6.0f, 6.0f) : ImVec2(0.0f, 0.0f));
+        //ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
         ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f });
         ImGui::Begin("DockSpaceWindow", nullptr, window_flags);
         ImGui::PopStyleColor(); // MenuBarBg
-        ImGui::PopStyleVar(2);
+        ImGui::PopStyleVar();
 
 		auto* window = ImGui::GetCurrentWindow();
 		ImVec2 size, pos;

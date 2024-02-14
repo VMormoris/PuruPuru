@@ -3,7 +3,7 @@
 #include <imgui_internal.h>
 #include <utils.h>
 
-static struct AutocompleteInputText {
+struct AutocompleteInputText {
 	std::string* Text = nullptr;
 	const std::vector<std::string>* Suggestions = nullptr;
 

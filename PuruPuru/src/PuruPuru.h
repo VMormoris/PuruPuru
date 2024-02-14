@@ -19,6 +19,7 @@ private:
 
     void DrawMainWindow(void);
     void DrawThemeWindow(void);
+    void DrawTestWindow(void);
     void DrawCustomTitleBar(float& outTitlebarHeight);
     void DrawMenubar(void);
 
