@@ -1824,7 +1824,8 @@ void Character::RenderFlow(void)
     case NodeType::ReturnQuest:
     case NodeType::Objective:
     {
-        const auto& pins = mECS.get<InputOutput>(curr);
+        entt::registry& reg = type == NodeType::AcceptQuest ? Character::sQuestECS : mECS;
+        const auto& pins = reg.get<InputOutput>(curr);
         auto* link = FindLink(pins.Output.ID);
         if (link == nullptr)
             return { nullptr, NodeType::None };
