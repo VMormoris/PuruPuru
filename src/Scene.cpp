@@ -13,6 +13,7 @@ using namespace ax;
 
 void ShowStyleEditor(bool* show = nullptr);
 void TextWithBackgroundColor(const char* text, const ImVec4& bgColor);
+static bool Searchbar(const char* label, std::string& text, size_t length, float width = 200.0f);
 
 void Scene::RenderFrame(void) noexcept
 {
@@ -212,8 +213,14 @@ void Scene::ShowPanels()
             const bool booleans = ImGui::TreeNodeEx("Booleans", treeNodeFlags);
             if (booleans)
             {
+                static std::string boolFilter;
+                Searchbar("bool string", boolFilter, 64);
+                ImGui::Separator();
+                //Draw searchbar control
                 for (auto&& [var, val] : mStateMachine.Booleans())
                 {
+                    if (var.find(boolFilter) == std::string::npos)
+                        continue;
                     ImGui::Text(var.c_str()); ImGui::SameLine();
                     const auto lbl = std::string("##") + var;
                     ImGui::Checkbox(lbl.c_str(), &val);
@@ -224,8 +231,13 @@ void Scene::ShowPanels()
             const bool integers = ImGui::TreeNodeEx("Integers", treeNodeFlags);
             if (integers)
             {
+                static std::string intFilter;
+                Searchbar("int string", intFilter, 64);
+                ImGui::Separator();
                 for (auto&& [var, val] : mStateMachine.Integers())
                 {
+                    if (var.find(intFilter) == std::string::npos)
+                        continue;
                     ImGui::Text(var.c_str()); ImGui::SameLine();
                     const auto lbl = std::string("##") + var;
                     ImGui::DragInt(lbl.c_str(), &val);
@@ -614,4 +626,68 @@ void Scene::Open()
         mLastFilepath = (path.replace_extension(".puru")).string();
         SceneSerializer{ this }.Deserialize(path.string());
     }
+}
+
+static bool Searchbar(const char* label, std::string& text, size_t length, float width)
+{
+    ImGuiIO& io = ImGui::GetIO();
+    const float lineHeight = io.Fonts->Fonts[0]->FontSize + ImGui::GetStyle().FramePadding.y * 2.0f;
+
+    ImGui::PushID(label);
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 1.0f));
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+    bool shouldFocus = false;
+    if (text.empty())//Check if hint should be showned so we know if we need to dislpay icon as well
+    {
+        //ImVec2 size(lineHeight + 3.0f, lineHeight);
+        //ImGui::PushFont(IconFont);
+        //ImGui::PushStyleColor(ImGuiCol_Button, { 0.063f, 0.063f, 0.063f, 1.0f });
+        //ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.063f, 0.063f, 0.063f, 1.0f });
+        //ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.063f, 0.063f, 0.063f, 1.0f });
+        //shouldFocus = ImGui::Button(ICON_FK_SEARCH, size);
+        //ImGui::PopStyleColor(3);
+        //ImGui::PopFont();
+        //ImGui::SameLine();
+        //ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 2.0f);
+    }
+
+    //Actual Input
+    ImGui::PushItemWidth(width);
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, { 0.0f, 0.0f, 0.0f, 1.0f });
+
+    char* buffer = new char[length + 1];
+    memcpy(buffer, text.c_str(), text.size() + 1);
+    if (shouldFocus) ImGui::SetKeyboardFocusHere();
+    bool changed = ImGui::InputTextWithHint("##Searchbar", "Search...", buffer, length);
+    if (changed)
+    {
+        text = std::string(buffer);
+        std::for_each(text.begin(), text.end(), [](char& c) { c = std::tolower(c); });
+    }
+    delete[] buffer;
+
+    ImGui::PopStyleColor();
+    ImGui::PopItemWidth();
+
+    if (!text.empty() && !changed)//Button for clearing text
+    {
+        //ImGui::SameLine();
+        //ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 2.0f);
+        //
+        //ImVec2 size(lineHeight + 3.0f, lineHeight);
+        //ImGui::PushFont(IconFont);
+        //ImGui::PushStyleColor(ImGuiCol_Button, { 0.063f, 0.063f, 0.063f, 1.0f });
+        //const bool shouldClear = ImGui::Button(ICON_FK_TIMES, size);
+        //ImGui::PopStyleColor();
+        //ImGui::PopFont();
+        //
+        //if (shouldClear)
+        //{
+        //    text = "";
+        //    changed = true;
+        //}
+    }
+    ImGui::PopStyleVar(2);
+    ImGui::PopID();
+    return changed;
 }
