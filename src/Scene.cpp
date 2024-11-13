@@ -260,7 +260,7 @@ void Scene::ShowPanels()
             const bool flavors = ImGui::TreeNodeEx("Flavors", treeNodeFlags);
             if (flavors)
             {
-                static constexpr char* Flavors[] = { "Bitter", "Salty", "Sour", "Sweet", "Neutral" };
+                static const char* Flavors[] = { "Bitter", "Salty", "Sour", "Sweet", "Neutral" };
                 
                 ImGui::Text("Main Character"); ImGui::SameLine();
                 int32_t index = static_cast<int32_t>(mainCharacterFlavor);
@@ -293,12 +293,12 @@ void Scene::ShowPanels()
             {
                 do
                 {
-                    pair = mAllData[mWorkingDataIndex].Self.FindNextNode((int32_t)pair.first->ID.AsPointer(), mStateMachine, std::make_pair(mainCharacterFlavor, npcFlavor), mChoice);
+                    pair = mAllData[mWorkingDataIndex].Self.FindNextNode((int32_t)(u64)pair.first->ID.AsPointer(), mStateMachine, std::make_pair(mainCharacterFlavor, npcFlavor), mChoice);
                 }
                 while (pair.second != NodeType::Act && pair.second != NodeType::Dialogue && pair.second != NodeType::None);
                 mDone = pair.second == NodeType::None;
                 if (!mDone)
-                    mDebugingID = (int32_t)pair.first->ID.AsPointer();
+                    mDebugingID = (int32_t)(u64)pair.first->ID.AsPointer();
                 if (pair.second == NodeType::Act)
                     mChoice = 0;
                 else

@@ -38,7 +38,7 @@ public:
 	Scene(void);
 	~Scene(void) noexcept;
 
-	void Scene::RenderFrame(void) noexcept;
+	void RenderFrame(void) noexcept;
 
 private:
 

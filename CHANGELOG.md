@@ -1,3 +1,10 @@
+# Version v0.1.5
+## Bug Fixes:
+- Big trees will be more difficult to bug out
+
+## Features:
+- Linux beta support
+
 # Version v0.1.4
 ## Bug Fixes:
 - Random crash when passing through `Accept Quest Node` in debug

@@ -9,3 +9,10 @@
 [submodule "3rdParty/yaml-cpp"]
 	path = 3rdParty/yaml-cpp
 	url = https://github.com/VMormoris/yaml-cpp.git
+[submodule "3rdParty/premake-vscode"]
+	path = 3rdParty/premake-vscode
+	url = https://github.com/Enhex/premake-vscode.git
+[submodule "3rdParty/GLFW"]
+	path = 3rdParty/GLFW
+	url = https://github.com/VMormoris/glfw.git
+	branch = titlebar

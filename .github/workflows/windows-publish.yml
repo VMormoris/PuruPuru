@@ -1,4 +1,4 @@
-name: Publish
+name: Publish for Windows
 
 on:
   push:
@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup premake
         uses: abel0b/setup-premake@v2.3
@@ -33,15 +35,15 @@ jobs:
         run: msbuild /m /p:Configuration=${{matrix.config}} .
 
       - name: Create release zip
-        run: Copy-Item LICENSE,Data,imgui.ini -Destination "bin/${{matrix.config}}-windows/PuruPuru" -Recurse && Compress-Archive bin/${{matrix.config}}-windows/PuruPuru ${{matrix.config}}.zip
+        run: Copy-Item LICENSE,Data,imgui.ini -Destination "bin/${{matrix.config}}-windows/PuruPuru" -Recurse && Compress-Archive bin/${{matrix.config}}-windows/PuruPuru Windows_${{matrix.config}}.zip
 
       - name: Publish
         id: Publish
         uses: softprops/action-gh-release@v1
         with:
-          name: PuruPuru v0.1.4
-          tag_name: v0.1.4
+          name: PuruPuru v0.1.5
+          tag_name: v0.1.5
           body_path: CHANGELOG.md
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           files: |
-            ${{matrix.config}}.zip
+            Windows_${{matrix.config}}.zip

@@ -97,7 +97,7 @@ void ExportSerializer::Serialize(const std::string& filepath)
 			for (auto&& [entityID, node, pins] : view.each())
 			{
 				out << YAML::BeginMap;
-				out << YAML::Key << "ID" << YAML::Value << (int32_t)node.ID.AsPointer();
+				out << YAML::Key << "ID" << YAML::Value << (int32_t)(u64)node.ID.AsPointer();
 				out << YAML::Key << "Title" << YAML::Value << node.Title;
 				auto targets = FindTargets(character.mECS, pins.Output);
 				out << YAML::Key << "Outputs" << YAML::Value << targets;

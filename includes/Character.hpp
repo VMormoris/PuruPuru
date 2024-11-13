@@ -21,7 +21,7 @@ inline const ImVec2 OPERATOR_BUTTON_SIZE = { 32.0f, 28.0f };
 //}
 
 template<typename T>
-inline [[nodiscard]] entt::entity Character::SearchEntity(ed::NodeId nodeId) const
+[[nodiscard]] inline entt::entity Character::SearchEntity(ed::NodeId nodeId) const
 {
 	auto view = mECS.view<T>();
 	for (auto&& [entityID, node] : view.each())
@@ -31,7 +31,7 @@ inline [[nodiscard]] entt::entity Character::SearchEntity(ed::NodeId nodeId) con
 }
 
 template<>
-inline [[nodiscard]] entt::entity Character::SearchEntity<AcceptQuestNode>(ed::NodeId nodeId) const {
+[[nodiscard]] inline entt::entity Character::SearchEntity<AcceptQuestNode>(ed::NodeId nodeId) const {
 	auto view = sQuestECS.view<AcceptQuestNode>();
 	for (auto&& [entityID, node] : view.each())
 		if (node.ID == nodeId)
@@ -40,7 +40,7 @@ inline [[nodiscard]] entt::entity Character::SearchEntity<AcceptQuestNode>(ed::N
 }
 
 template<typename T>
-inline [[nodiscard]] Node* Character::FindNode(entt::entity entityID) const
+[[nodiscard]] inline Node* Character::FindNode(entt::entity entityID) const
 {
 	if (auto* node = mECS.try_get<T>(entityID))
 		return (Node*)node;
@@ -49,7 +49,7 @@ inline [[nodiscard]] Node* Character::FindNode(entt::entity entityID) const
 }
 
 template<>
-inline [[nodiscard]] Node* Character::FindNode<AcceptQuestNode>(entt::entity entityID) const
+[[nodiscard]] inline Node* Character::FindNode<AcceptQuestNode>(entt::entity entityID) const
 {
 	if (auto* node = Character::sQuestECS.try_get<AcceptQuestNode>(entityID))
 		return (Node*)node;
@@ -58,7 +58,7 @@ inline [[nodiscard]] Node* Character::FindNode<AcceptQuestNode>(entt::entity ent
 }
 
 template<typename T, typename ...Args>
-inline [[nodiscard]] Node* Character::FindNodes(ComponentGroup<T, Args...>, entt::entity entityID) const
+[[nodiscard]] inline Node* Character::FindNodes(ComponentGroup<T, Args...>, entt::entity entityID) const
 {
 	if (Node* node = FindNode<T>(entityID))
 		return node;
@@ -127,7 +127,7 @@ inline void Character::RenderVariableNode(NodeBuilder& builder)
 }
 
 template<typename T>
-inline [[nodiscard]] entt::entity Character::SpawnSetVariableNode()
+[[nodiscard]] inline entt::entity Character::SpawnSetVariableNode()
 {
 	const auto entityID = mECS.create();
 	auto& node = mECS.emplace<VariableNode<T>>(entityID, GetNextID());

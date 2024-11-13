@@ -7,7 +7,7 @@ class StateMachine {
 public:
 
 	template<typename T>
-	void SetValue(const std::string& key, T val) { static_assert(false, "Not implemented yet!"); }
+	void SetValue(const std::string& key, T val) { /*static_assert(false, "Not implemented yet!");*/ }
 
 	void SetFork(const gte::uuid& key, bool val) { mForks.insert({ key, val }); }
 

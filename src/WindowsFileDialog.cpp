@@ -1,3 +1,4 @@
+#ifdef PLATFORM_WINDOWS
 #include <FileDialog.h>
 #include <filesystem>
 
@@ -52,3 +53,4 @@ std::string PeekDirectory(void)
 	}
 	return std::string();
 }
+#endif

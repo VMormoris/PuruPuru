@@ -4,13 +4,17 @@
 
 #include <stdint.h>
 
+template<>
 inline const char VariableNode<int32_t>::NAME[STR_LENGTH] = "Set Variable(Integer)";
+template<>
 inline const ImColor VariableNode<int32_t>::COLOR = { 128, 255, 64 };
 
 inline const char DialogueNode::NAME[STR_LENGTH] = "DialogueNode";
 inline const ImColor DialogueNode::COLOR = { 188, 43, 43 };
 
+template<>
 inline const char VariableNode<bool>::NAME[STR_LENGTH] = "Set Variable(Boolean)";
+template<>
 inline const ImColor VariableNode<bool>::COLOR = { 128, 255, 64 };
 
 inline const char BranchNode::NAME[STR_LENGTH] = "Branch";

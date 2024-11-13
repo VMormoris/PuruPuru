@@ -15,3 +15,17 @@ NodeEditor.json
 
 #NextCloud
 **/Thumbs.db
+
+# Make
+Makefile
+**.make
+
+# VS Code
+.vscode
+**.code-workspace
+
+# premake5 vscode
+PuruPuru
+3rdParty/imgui-node-editor/imgui-node-editor
+3rdParty/yaml-cpp/yaml-cpp
+3rdParty/imgui-node-editor/ThirdParty/imgui/ImGui

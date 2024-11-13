@@ -134,7 +134,7 @@ void Character::RenderNodes(void)
     }
 
     {
-        auto& view = mECS.view<ActNode>();
+        auto view = mECS.view<ActNode>();
         for (auto&& [entityID, node] : view.each())
         {
 
@@ -163,7 +163,7 @@ void Character::RenderNodes(void)
             if (ImGui::Begin("Act Node", &Scene::sWindows[Scene::ACT_INDEX], ImGuiWindowFlags_NoResize))
             {
                 static constexpr size_t INVALID_INDEX = static_cast<size_t>(-1);
-                static constexpr char* typestr[3] = { "Main Character", "NPC", "Internal" };
+                static const char* typestr[3] = { "Main Character", "NPC", "Internal" };
                 auto& node = view.get<ActNode>(mOpenActNode);
                 size_t i = 0;
                 size_t delIndex = INVALID_INDEX;
@@ -199,7 +199,7 @@ void Character::RenderNodes(void)
     }
 
     {
-        auto& view = mECS.view<ForkNode>();
+        auto view = mECS.view<ForkNode>();
         for (auto&& [entityID, node] : view.each())
         {
 
@@ -215,8 +215,8 @@ void Character::RenderNodes(void)
     }
 
     {
-        static constexpr char* operators[] = { "==", ">", "<", ">=", "<=", "<>" };
-        auto& view = mECS.view<BranchNode>();
+        static const char* operators[] = { "==", ">", "<", ">=", "<=", "<>" };
+        auto view = mECS.view<BranchNode>();
         for (auto&& [entityID, node] : view.each())
         {
             builder.Begin(node.ID);
@@ -336,7 +336,7 @@ void Character::RenderNodes(void)
                     ImGui::PopItemWidth();
                     int32_t iOp = static_cast<int32_t>(condition.Operator);
                     ImGui::PushItemWidth(64.0f);
-                    if (ImGui::Combo("##operator", &iOp, operators, ARRAYSIZE(operators)))
+                    if (ImGui::Combo("##operator", &iOp, operators, IM_ARRAYSIZE(operators)))
                         condition.Operator = static_cast<CompareOperator>(iOp);
                     ImGui::PopItemWidth();
                     ImGui::SameLine();
@@ -1102,7 +1102,7 @@ entt::entity Character::SpawnCommentNode(void)
 {
     auto view = mECS.view<Node>();
     for (auto&& [entityID, node] : view.each())
-        return (int32_t)node.ID.AsPointer();
+        return static_cast<int32_t>((u64)node.ID.AsPointer());
     return 0;
 }
 
@@ -1477,8 +1477,8 @@ void Character::RenderCreatePanel(void) noexcept
         {
             auto startEntity = FindEntity(startPinId);
             auto endEntity = FindEntity(endPinId);
-            auto& startPin = FindPin(startEntity, startPinId);
-            auto& endPin = FindPin(endEntity, endPinId);
+            auto startPin = FindPin(startEntity, startPinId);
+            auto endPin = FindPin(endEntity, endPinId);
 
             //mNewLinkPin = startPinId != ed::PinId(0) ? startPin : endPin;
             if (startPin.Kind == PinKind::Input)
@@ -1648,7 +1648,7 @@ void Character::RenderLinks(void)
 void Character::RenderFlow(void)
 {
     auto view = mECS.view<Link>();
-    for (auto& [entityID, link] : view.each())
+    for (auto [entityID, link] : view.each())
         ed::Flow(link.ID);
 }
 

@@ -4,10 +4,13 @@ If you want to try out the tool just go [here](https://github.com/VMormoris/Puru
 
 If you want to expand the tool for your own game:
 - Clone the repo:
-    ```git clone https://github.com/VMormoris/PuruPuru```
-- Create the solution:
-    ```premake5 vs20**```
-- Open the `PuruPuru.sln`
+    ```git clone --recursive https://github.com/VMormoris/PuruPuru```
+- Create project:
+  - In **Windows** run `premake5 vs20**`
+  - In **Linux** run `premake5 gmake2`
+- Build:
+  - In **Windows** open `PuruPuru.sln` with your favorite editor (or use `msbuild`)
+  - In **Linux** run `make`
 
 _For more information on how to use premake5 can be found in their [website](https://premake.github.io/docs/)_
 

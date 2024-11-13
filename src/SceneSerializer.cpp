@@ -84,7 +84,7 @@ void SceneSerializer::Serialize(const std::string& filepath)
 			for (auto&& [entityID, node, pins] : view.each())
 			{
 				out << YAML::BeginMap;
-				out << YAML::Key << "ID" << YAML::Value << (int32_t)node.ID.AsPointer();
+				out << YAML::Key << "ID" << YAML::Value << (int32_t)(u64)node.ID.AsPointer();
 				out << YAML::Key << "Position" << YAML::Value << ed::GetNodePosition(node.ID);
 				out << YAML::Key << "Title" << YAML::Value << node.Title;
 				out << YAML::Key << "Input" << YAML::Value << (int64_t)pins.Input.ID.AsPointer();
@@ -308,9 +308,9 @@ void SceneSerializer::Serialize(const std::string& filepath)
 			for (auto&& [entityID, link] : view.each())
 			{
 				out << YAML::BeginMap;
-				out << YAML::Key << "ID" << YAML::Value << (int32_t)link.ID.AsPointer();
-				out << YAML::Key << "StartPinID" << YAML::Value << (int32_t)link.StartPinID.AsPointer();
-				out << YAML::Key << "EndPinID" << YAML::Value << (int32_t)link.EndPinID.AsPointer();
+				out << YAML::Key << "ID" << YAML::Value << (int32_t)(u64)link.ID.AsPointer();
+				out << YAML::Key << "StartPinID" << YAML::Value << (int32_t)(u64)link.StartPinID.AsPointer();
+				out << YAML::Key << "EndPinID" << YAML::Value << (int32_t)(u64)link.EndPinID.AsPointer();
 				out << YAML::EndMap;
 			}
 			out << YAML::EndSeq;
@@ -334,7 +334,7 @@ void SceneSerializer::Deserialize(const std::string& filepath)
 	try { data = YAML::Load(is); }
 	catch (YAML::ParserException e) { std::cout << e.msg << '\n';  return; }
 
-	for (auto& characterNode : data)
+	for (auto characterNode : data)
 	{
 		int32_t nextID = 1;
 		ed::Config config;
@@ -358,8 +358,8 @@ void SceneSerializer::Deserialize(const std::string& filepath)
 					character.mECS.destroy(entityID);
 
 				auto entity = character.mECS.create();
-				auto& node = character.mECS.emplace<Node>(entity, id);
-				ed::SetNodePosition(node.ID, pos);
+				auto& newNode = character.mECS.emplace<Node>(entity, id);
+				ed::SetNodePosition(newNode.ID, pos);
 				character.mECS.emplace<Pin>(entity, pinId, "", PinKind::Output);
 			}
 		}
